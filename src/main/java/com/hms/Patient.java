@@ -30,6 +30,15 @@ public class Patient {
     public Patient() {
 
     }
+    public Patient(String name, int age, Gender gender, BloodType bloodGroup
+        ,String disease, String phone){
+            this.name = name;
+            this.age = age;
+            this.gender = gender;
+            this.bloodGroup = bloodGroup;
+            this.disease = disease;
+            this.phone = phone;
+    }
 
     public int getPatientId() {
         return patientId;
