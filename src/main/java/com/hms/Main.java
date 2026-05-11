@@ -6,7 +6,6 @@ import java.util.ArrayList;
 public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        ArrayList<Patient> patients = new ArrayList<>();
         PatientDAO patientDAO = new PatientDAOImpl();
         while (true) {
             System.out.println("============== ABCD HOSPITAL ===============");
@@ -35,7 +34,7 @@ public class Main {
                     String phone = sc.next();
                     Patient patient = new Patient(name,
                             age,
-                            Patient.Gender.valueOf(gender),
+                            Patient.Gender.valueOf(gender.toUpperCase()),
                             Patient.BloodType.valueOf(bloodGroup),
                             disease,
                             phone
@@ -53,7 +52,12 @@ public class Main {
                     System.out.println("Enter Patient ID : ");
                     int patientId = sc.nextInt();
                     Patient patient1 = patientDAO.getPatientById(patientId);
-                    patientDAO.printDetails(patient1);
+                    if (patient1 != null) {
+                        patientDAO.printDetails(patient1);
+                    }
+                    else{
+                        System.out.println("Invalid Patient ID");
+                    }
                     break;
                 case 4:
                     System.out.println("Enter Patient ID : ");
@@ -69,8 +73,7 @@ public class Main {
                 case 5:
                     System.out.println("Enter Patient ID : ");
                     int Id = sc.nextInt();
-                    Patient patient3 = patientDAO.getPatientById(Id);
-                    patientDAO.printDetails(patient3);
+                    patientDAO.deletePatient(Id);
                     break;
                 case 6:
                     System.out.println("Closing the Program");
