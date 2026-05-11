@@ -9,9 +9,10 @@ import java.util.Scanner;
 public class PatientDAOImpl implements PatientDAO {
     Connection conn = DBConnection.getConnection();
     Scanner sc = new Scanner(System.in);
+
     @Override
-    public void addPatient(Patient p){
-        try{
+    public void addPatient(Patient p) {
+        try {
             String query = "Insert INTO patients" +
                     "(name, age, gender,blood_group, disease, phone)" +
                     "VALUES(?,?,?,?,?,?)";
@@ -25,7 +26,7 @@ public class PatientDAOImpl implements PatientDAO {
             ps.setString(6, p.getPhone());
             ps.executeUpdate();
             ResultSet rs = ps.getGeneratedKeys();
-            if(rs.next()){
+            if (rs.next()) {
                 int id = rs.getInt(1);
                 p.setPatientId(id);
                 System.out.println("Patient added successfully");
@@ -35,14 +36,15 @@ public class PatientDAOImpl implements PatientDAO {
             e.printStackTrace();
         }
     }
+
     @Override
-    public ArrayList<Patient> getAllPatients(){
+    public ArrayList<Patient> getAllPatients() {
         ArrayList<Patient> list = new ArrayList<>();
-        try{
+        try {
             String query = "select * from patients";
             PreparedStatement ps = conn.prepareStatement(query);
             ResultSet rs = ps.executeQuery();
-            while(rs.next()){
+            while (rs.next()) {
 
                 Patient p = new Patient();
 
@@ -80,21 +82,21 @@ public class PatientDAOImpl implements PatientDAO {
 
                 list.add(p);
             }
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return list;
     }
+
     @Override
-    public Patient getPatientById(int id){
+    public Patient getPatientById(int id) {
         Patient p = null;
         try {
             String Query = "Select * from patients where patient_id = ?";
             PreparedStatement ps = conn.prepareStatement(Query);
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
-            if(rs.next()){
+            if (rs.next()) {
                 p = new Patient();
                 p.setPatientId(rs.getInt("patient_id"));
                 p.setName(rs.getString("name"));
@@ -104,38 +106,41 @@ public class PatientDAOImpl implements PatientDAO {
                 p.setDisease(rs.getString("disease"));
                 p.setPhone(rs.getString("phone"));
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return p;
     }
+
     @Override
-    public void updatePatient(Patient p){
+    public void updatePatient(Patient p) {
         System.out.println("Select the Field you want to update");
         System.out.println("1. name");
         System.out.println("2. age");
         System.out.println("3 gender");
-        System.out.println("4 phone");
-        System.out.println("5 blood group");
+        System.out.println("4 blood group");
+        System.out.println("5 Disease");
+        System.out.println("6 phone");
 
         int choice = sc.nextInt();
         sc.nextLine();
+        System.out.print("Enter the new value to be updated : ");
         String update = sc.nextLine();
         updatePatientField(p.getPatientId(), choice, update);
     }
+
     @Override
     public void updatePatientField(
             int patientId,
             int choice,
             String newValue
-    ){
+    ) {
 
-        try{
+        try {
 
             String column = "";
 
-            switch(choice){
+            switch (choice) {
 
                 case 1:
                     column = "name";
@@ -150,10 +155,13 @@ public class PatientDAOImpl implements PatientDAO {
                     break;
 
                 case 4:
-                    column = "phone";
+                    column = "blood_group";
                     break;
                 case 5:
-                    column = "blood_group";
+                    column = "disease";
+                    break;
+                case 6:
+                    column = "phone";
                     break;
 
                 default:
@@ -169,7 +177,7 @@ public class PatientDAOImpl implements PatientDAO {
             PreparedStatement ps =
                     conn.prepareStatement(query);
 
-            if(column.equals("age")){
+            if (column.equals("age")) {
 
                 ps.setInt(1, Integer.parseInt(newValue));
 
@@ -183,7 +191,7 @@ public class PatientDAOImpl implements PatientDAO {
             int rowsUpdated =
                     ps.executeUpdate();
 
-            if(rowsUpdated > 0){
+            if (rowsUpdated > 0) {
 
                 System.out.println(
                         "Patient updated successfully!"
@@ -196,14 +204,15 @@ public class PatientDAOImpl implements PatientDAO {
                 );
             }
 
-        } catch (Exception e){
+        } catch (Exception e) {
 
             e.printStackTrace();
         }
     }
+
     @Override
-    public void printDetails(Patient p){
-        if(p == null){
+    public void printDetails(Patient p) {
+        if (p == null) {
             System.out.println("Patient not found");
             return;
         }
@@ -215,10 +224,11 @@ public class PatientDAOImpl implements PatientDAO {
         System.out.println("Disease is:" + p.getDisease());
         System.out.println("phone is: " + p.getPhone());
     }
-    @Override
-    public void deletePatient(int patientId){
 
-        try{
+    @Override
+    public void deletePatient(int patientId) {
+
+        try {
 
             String query =
                     "DELETE FROM patients " +
@@ -232,7 +242,7 @@ public class PatientDAOImpl implements PatientDAO {
             int rowsDeleted =
                     ps.executeUpdate();
 
-            if(rowsDeleted > 0){
+            if (rowsDeleted > 0) {
 
                 System.out.println(
                         "Patient deleted successfully!"
@@ -245,7 +255,7 @@ public class PatientDAOImpl implements PatientDAO {
                 );
             }
 
-        } catch (Exception e){
+        } catch (Exception e) {
 
             e.printStackTrace();
         }
