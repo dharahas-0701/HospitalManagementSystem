@@ -24,18 +24,19 @@ public class Main {
                     String name = sc.nextLine();
                     System.out.print("Enter Patient Age : ");
                     int age = sc.nextInt();
+                    sc.nextLine();
                     System.out.println("Enter Patient Gender (MALE/FEMALE/OTHER) : ");
-                    String gender = sc.next();
+                    String gender = sc.nextLine();
                     System.out.println("Enter Patient Blood Group (A_POSITIVE, O_NEGATTIVE etc..) : ");
-                    String bloodGroup = sc.next();
+                    String bloodGroup = sc.nextLine();
                     System.out.println("Enter Patient Disease : ");
-                    String disease = sc.next();
+                    String disease = sc.nextLine();
                     System.out.println("Enter Patient Phone Number : ");
-                    String phone = sc.next();
+                    String phone = sc.nextLine();
                     Patient patient = new Patient(name,
                             age,
                             Patient.Gender.valueOf(gender.toUpperCase()),
-                            Patient.BloodType.valueOf(bloodGroup),
+                            Patient.BloodType.valueOf(bloodGroup.toUpperCase()),
                             disease,
                             phone
                     );
