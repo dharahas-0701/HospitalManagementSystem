@@ -124,7 +124,7 @@ public class PatientDAOImpl implements PatientDAO {
         String update = sc.nextLine();
         updatePatientField(p.getPatientId(), choice, update);
     }
-
+    @Override
     public void updatePatientField(
             int patientId,
             int choice,
@@ -201,6 +201,7 @@ public class PatientDAOImpl implements PatientDAO {
             e.printStackTrace();
         }
     }
+    @Override
     public void printDetails(Patient p){
         if(p == null){
             System.out.println("Patient not found");
