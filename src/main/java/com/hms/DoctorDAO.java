@@ -12,6 +12,8 @@ public interface DoctorDAO {
 
     void updateDoctor(Doctor d);
 
+    void updateDoctorField(int doctorId, int choice, String new_value);
+
     void deleteDoctor(int doctorId);
 
     void printDetails(Doctor d);
