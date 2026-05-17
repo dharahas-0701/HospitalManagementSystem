@@ -1,4 +1,5 @@
-package com.hms;
+package com.hms.patient;
+import com.hms.DBConnection;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

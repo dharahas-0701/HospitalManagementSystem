@@ -1,8 +1,8 @@
-package com.hms;
+package com.hms.doctor;
+import com.hms.DBConnection;
 import java.util.ArrayList;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Connection;
 import java.util.Scanner;
 public class DoctorDAOImpl implements DoctorDAO  {

@@ -1,4 +1,4 @@
-package com.hms;
+package com.hms.patient;
 
 public class Patient {
 

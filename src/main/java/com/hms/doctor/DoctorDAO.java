@@ -1,4 +1,4 @@
-package com.hms;
+package com.hms.doctor;
 
 import java.util.ArrayList;
 

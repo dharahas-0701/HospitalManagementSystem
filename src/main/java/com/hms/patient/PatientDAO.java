@@ -1,4 +1,4 @@
-package com.hms;
+package com.hms.patient;
 
 import java.sql.Connection;
 import java.util.ArrayList;
