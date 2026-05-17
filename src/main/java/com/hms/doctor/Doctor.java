@@ -1,6 +1,8 @@
 package com.hms.doctor;
 
 public class Doctor {
+
+
     public enum Specialization {
         CARDIOLOGIST,
         NEUROLOGIST,

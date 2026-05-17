@@ -15,7 +15,7 @@ public class PatientMenu {
     public static void start() {
 
         while (true) {
-            System.out.println("=========== PATIENT MANAGEMENT ===========");
+            System.out.println("=========== PATIENT MENU ===========");
             System.out.println("1. Add Patient");
             System.out.println("2. View All Patients");
             System.out.println("3. Search Patient");

@@ -1,5 +1,7 @@
 package com.hms.doctor;
 import com.hms.DBConnection;
+
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,7 +16,7 @@ public class DoctorDAOImpl implements DoctorDAO  {
             String query = "INSERT INTO doctors" +
                     "(name, specialization, phone, experience, availability)"+
                     "VALUES(?,?,?,?,?)";
-            PreparedStatement ps = conn.prepareStatement(query);
+            PreparedStatement ps = conn.prepareStatement(query,  Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, d.getDoctorName());
             ps.setString(2, d.getSpecialization().name());
             ps.setString(3, d.getPhone());
@@ -36,7 +38,7 @@ public class DoctorDAOImpl implements DoctorDAO  {
     @Override
     public void deleteDoctor(int doctorId) {
         try{
-            String query = "DELETE FROM doctors WHERE doctorId=?";
+            String query = "DELETE FROM doctors WHERE doctor_id=?";
             PreparedStatement ps = conn.prepareStatement(query);
             ps.setInt(1,doctorId);
             int rows = ps.executeUpdate();
@@ -88,11 +90,11 @@ public class DoctorDAOImpl implements DoctorDAO  {
 
                 default:
                     System.out.println("Invalid choice");
-
+                    return;
             }
             String query = "UPDATE doctors SET "+
                     column + "= ?"+
-                    " WHERE doctorId = ?";
+                    " WHERE doctor_id = ?";
             PreparedStatement ps = conn.prepareStatement(query);
             if(column.equals("experience")){
                 ps.setInt(1, Integer.parseInt(new_value));
@@ -141,7 +143,7 @@ public class DoctorDAOImpl implements DoctorDAO  {
     public Doctor getDoctorById(int doctorId) {
         Doctor d = null;
         try{
-            String query = "SELECT * FROM doctors WHERE doctorId=?";
+            String query = "SELECT * FROM doctors WHERE doctor_id=?";
             PreparedStatement ps = conn.prepareStatement(query);
             ps.setInt(1,doctorId);
             ResultSet rs = ps.executeQuery();
@@ -173,5 +175,32 @@ public class DoctorDAOImpl implements DoctorDAO  {
             System.out.println("Experience : "+d.getExperience());
             System.out.println("Availability : "+d.getAvailability().name());
         }
+    }
+    @Override
+    public ArrayList<Doctor> getAvailableDoctorsBySpecialization(Doctor.Specialization specialization) {
+        ArrayList<Doctor> list = new ArrayList<>();
+        try{
+            String query = "Select * from doctors"+
+                    " where specialization = ?"+
+                    " and availability = ?";
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.setString(1, specialization.name());
+            ps.setString(2, "AVAILABLE");
+            ResultSet rs = ps.executeQuery();;
+            while(rs.next()){
+                Doctor d = new Doctor();
+                d.setDoctorId(rs.getInt(1));
+                d.setDoctorName(rs.getString(2));
+                d.setSpecialization(Doctor.Specialization.valueOf(rs.getString(3)));
+                d.setPhone(rs.getString(4));
+                d.setExperience(rs.getInt(5));
+                d.setAvailability(Doctor.Availability.valueOf(rs.getString(6)));
+                list.add(d);
+            }
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        return list;
     }
 }

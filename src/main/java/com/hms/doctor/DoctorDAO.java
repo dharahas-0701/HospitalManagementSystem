@@ -17,4 +17,6 @@ public interface DoctorDAO {
     void deleteDoctor(int doctorId);
 
     void printDetails(Doctor d);
+
+    ArrayList<Doctor> getAvailableDoctorsBySpecialization(Doctor.Specialization specialization);
 }
