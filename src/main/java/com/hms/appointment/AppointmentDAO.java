@@ -8,9 +8,9 @@ public interface AppointmentDAO {
 
     Appointment getAppointmentById(int id);
 
-    void updateAppointment(Appointment a);
+    void updateAppointmentStatus(int appointmentId, Appointment.Status s);
 
-    void cancelAppointment(Appointment a);
+    void cancelAppointment(int appointmentId);
 
     void printDetails(Appointment a);
 
