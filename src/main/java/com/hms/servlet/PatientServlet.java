@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 
 
 @WebServlet("/patient")
@@ -17,7 +18,18 @@ public class PatientServlet extends HttpServlet {
         patientDAO = new PatientDAOImpl();
     }
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String action = request.getParameter("action");
+        if(action==null){
+            action = "viewAll";
+        }
+        switch(action){
+            case "viewAll":
+                viewAllPatients(request, response);
+                break;
+            default:
+                response.getWriter().println("Invalid action");
 
+        }
     }
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String action = request.getParameter("action");
@@ -38,14 +50,21 @@ public class PatientServlet extends HttpServlet {
             String phone = request.getParameter("phone");
             Patient p = new Patient(name, age, gender, bloodType, disease, phone);
             patientDAO.addPatient(p);
-            response.setContentType("text/html;charset=UTF-8");
-            PrintWriter out = response.getWriter();
-            out.println("<h2> Patient has been successfully added.</h2>");
-            out.println("<h3> Patient ID : " + p.getPatientId() + "</h3>");
+            response.sendRedirect(request.getContextPath() + "/patient?action=viewAll");
         }
         catch (Exception e){
             e.printStackTrace();
             response.getWriter().println("<h2> Error Adding Patient </h2>");
+        }
+    }
+    protected void viewAllPatients(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        try {
+            ArrayList<Patient> patients = patientDAO.getAllPatients();
+            request.setAttribute("patients", patients);
+            request.getRequestDispatcher("/patient/view-patients.jsp").forward(request, response);
+        }
+        catch (Exception e){
+            e.printStackTrace();
         }
     }
 }
