@@ -17,6 +17,8 @@ public class PatientServlet extends HttpServlet {
     public void init(){
         patientDAO = new PatientDAOImpl();
     }
+
+
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String action = request.getParameter("action");
         if(action==null){
@@ -28,6 +30,10 @@ public class PatientServlet extends HttpServlet {
                 break;
             case "search":
                 searchPatient(request, response);
+                break;
+            case "edit":
+                editPatient(request, response);
+                break;
             default:
                 response.getWriter().println("Invalid action");
 
@@ -39,6 +45,11 @@ public class PatientServlet extends HttpServlet {
             case "add":
                 addPatient(request, response);
                 break;
+            case "update":
+                updatePatient(request, response);
+                break;
+            default:
+                response.getWriter().println("Invalid action");
         }
     }
 
@@ -75,6 +86,35 @@ public class PatientServlet extends HttpServlet {
             Patient p = patientDAO.getPatientById(id);
             request.setAttribute("patient", p);
             request.getRequestDispatcher("/patient/patient-details.jsp").forward(request, response);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+    protected void editPatient(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        try{
+            int id = Integer.parseInt(request.getParameter("id"));
+            Patient p = patientDAO.getPatientById(id);
+            request.setAttribute("patient", p);
+            request.getRequestDispatcher("/patient/edit-patient.jsp").forward(request, response);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+    protected void updatePatient(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        try{
+            int patientId = Integer.parseInt(request.getParameter("patientId"));
+            String name = request.getParameter("name");
+            int age = Integer.parseInt(request.getParameter("age"));
+            Patient.Gender gender = Patient.Gender.valueOf(request.getParameter("gender"));
+            Patient.BloodType bloodType = Patient.BloodType.valueOf(request.getParameter("bloodGroup"));
+            String disease = request.getParameter("disease");
+            String phone = request.getParameter("phone");
+            Patient p = new Patient(name, age, gender, bloodType, disease, phone);
+            p.setPatientId(patientId);
+            patientDAO.updatePatientDetails(p);
+            response.sendRedirect(request.getContextPath() + "/patient?action=viewAll");
         }
         catch (Exception e){
             e.printStackTrace();

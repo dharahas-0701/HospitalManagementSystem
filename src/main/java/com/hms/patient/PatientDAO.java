@@ -16,8 +16,8 @@ public interface PatientDAO {
 
     void printDetails(Patient p);
 
-    void updatePatientField(int patientId,
-                            int choice,
-                            String newValue);
+    void updatePatientField(int patientId, int choice, String newValue);
+
+    void updatePatientDetails(Patient p);
 
 }

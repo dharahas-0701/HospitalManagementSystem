@@ -261,5 +261,38 @@ public class PatientDAOImpl implements PatientDAO {
             e.printStackTrace();
         }
     }
+    @Override
+    public void updatePatientDetails(Patient p) {
+
+        try {
+
+            String query =
+                    "UPDATE patients SET " +
+                            "name=?, age=?, gender=?, " +
+                            "blood_group=?, disease=?, phone=? " +
+                            "WHERE patient_id=?";
+
+            PreparedStatement ps =
+                    conn.prepareStatement(query);
+
+            ps.setString(1, p.getName());
+            ps.setInt(2, p.getAge());
+            ps.setString(3, p.getGender().name());
+            ps.setString(4, p.getBloodGroup().name());
+            ps.setString(5, p.getDisease());
+            ps.setString(6, p.getPhone());
+            ps.setInt(7, p.getPatientId());
+
+            int rows = ps.executeUpdate();
+
+            if(rows > 0){
+                System.out.println("Patient updated successfully!");
+            }
+
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+    }
 
 }
