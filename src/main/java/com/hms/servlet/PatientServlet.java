@@ -26,6 +26,8 @@ public class PatientServlet extends HttpServlet {
             case "viewAll":
                 viewAllPatients(request, response);
                 break;
+            case "search":
+                searchPatient(request, response);
             default:
                 response.getWriter().println("Invalid action");
 
@@ -62,6 +64,17 @@ public class PatientServlet extends HttpServlet {
             ArrayList<Patient> patients = patientDAO.getAllPatients();
             request.setAttribute("patients", patients);
             request.getRequestDispatcher("/patient/view-patients.jsp").forward(request, response);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+    protected void searchPatient(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        try{
+            int id = Integer.parseInt(request.getParameter("id"));
+            Patient p = patientDAO.getPatientById(id);
+            request.setAttribute("patient", p);
+            request.getRequestDispatcher("/patient/patient-details.jsp").forward(request, response);
         }
         catch (Exception e){
             e.printStackTrace();
