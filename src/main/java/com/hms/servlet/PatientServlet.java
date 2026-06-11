@@ -48,6 +48,8 @@ public class PatientServlet extends HttpServlet {
             case "update":
                 updatePatient(request, response);
                 break;
+            case "delete":
+                deletePatient(request, response);
             default:
                 response.getWriter().println("Invalid action");
         }
@@ -114,6 +116,16 @@ public class PatientServlet extends HttpServlet {
             Patient p = new Patient(name, age, gender, bloodType, disease, phone);
             p.setPatientId(patientId);
             patientDAO.updatePatientDetails(p);
+            response.sendRedirect(request.getContextPath() + "/patient?action=viewAll");
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+    protected void deletePatient(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        try{
+            int id = Integer.parseInt(request.getParameter("patientId"));
+            patientDAO.deletePatient(id);
             response.sendRedirect(request.getContextPath() + "/patient?action=viewAll");
         }
         catch (Exception e){
