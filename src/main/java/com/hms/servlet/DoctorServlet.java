@@ -24,6 +24,9 @@ public class DoctorServlet extends HttpServlet {
             case "viewAll":
                 viewAllDoctors(request, response);
                 break;
+            case "search":
+                searchDoctor(request, response);
+                break;
             default:
                 response.getWriter().println("Invalid action");
         }
@@ -75,7 +78,15 @@ public class DoctorServlet extends HttpServlet {
 
 
     protected  void searchDoctor(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        try{
+            int id = Integer.parseInt(request.getParameter("id"));
+            Doctor doctor = doctorDAO.getDoctorById(id);
+            request.setAttribute("doctor", doctor);
+            request.getRequestDispatcher("/doctor/doctor-details.jsp").forward(request, response);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
 
