@@ -19,4 +19,6 @@ public interface DoctorDAO {
     void printDetails(Doctor d);
 
     ArrayList<Doctor> getAvailableDoctorsBySpecialization(Doctor.Specialization specialization);
+
+    void updateDoctorDetails(Doctor d);
 }

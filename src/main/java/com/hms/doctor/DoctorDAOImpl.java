@@ -203,4 +203,23 @@ public class DoctorDAOImpl implements DoctorDAO  {
         }
         return list;
     }
+
+    @Override
+    public void updateDoctorDetails(Doctor d) {
+        try{
+            String query = "update doctors set name = ?, specialization = ?, phone = ?," +
+                    "experience = ?, availability = ? where doctor_id = ?";
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.setString(1, d.getDoctorName());
+            ps.setString(2, d.getSpecialization().name());
+            ps.setString(3, d.getPhone());
+            ps.setInt(4, d.getExperience());
+            ps.setString(5, d.getAvailability().name());
+            ps.setInt(6, d.getDoctorId());
+            ps.executeUpdate();
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+    }
 }
