@@ -43,6 +43,9 @@ public class DoctorServlet extends HttpServlet {
             case "update":
                 updateDoctor(request,response);
                 break;
+            case "delete":
+                deleteDoctor(request,response);
+                break;
             default:
                 response.getWriter().println("Invalid action");
         }
@@ -130,6 +133,13 @@ public class DoctorServlet extends HttpServlet {
 
 
     protected void deleteDoctor(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        try{
+            int doctorId = Integer.parseInt(request.getParameter("doctorId"));
+            doctorDAO.deleteDoctor(doctorId);
+            response.sendRedirect(request.getContextPath() + "/doctor?action=viewAll");
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
     }
 }
