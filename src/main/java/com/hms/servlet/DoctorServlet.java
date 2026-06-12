@@ -27,6 +27,9 @@ public class DoctorServlet extends HttpServlet {
             case "search":
                 searchDoctor(request, response);
                 break;
+            case "edit":
+                editDoctor(request, response);
+                break;
             default:
                 response.getWriter().println("Invalid action");
         }
@@ -36,6 +39,9 @@ public class DoctorServlet extends HttpServlet {
         switch (action){
             case "add":
                 addDoctor(request,response);
+                break;
+            case "update":
+                updateDoctor(request,response);
                 break;
             default:
                 response.getWriter().println("Invalid action");
@@ -91,12 +97,35 @@ public class DoctorServlet extends HttpServlet {
 
 
     protected void editDoctor(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        try{
+            int id = Integer.parseInt(request.getParameter("id"));
+            Doctor d = doctorDAO.getDoctorById(id);
+            request.setAttribute("doctor", d);
+            request.getRequestDispatcher("/doctor/edit-doctor.jsp").forward(request, response);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
 
     protected void updateDoctor(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        try{
+            int doctorId = Integer.parseInt(request.getParameter("doctorId"));
+            String doctorName = request.getParameter("doctorName");
+            String phone = request.getParameter("phone");
+            int experience = Integer.parseInt(request.getParameter("experience"));
+            Doctor.Availability availability = Doctor.Availability.valueOf(request.getParameter("availability"));
+            Doctor.Specialization specialization = Doctor.Specialization.valueOf(request.getParameter("specialization"));
 
+            Doctor d = new Doctor(doctorName, specialization,phone,experience,availability);
+            d.setDoctorId(doctorId);
+            doctorDAO.updateDoctorDetails(d);
+            response.sendRedirect(request.getContextPath() + "/doctor?action=viewAll");
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
     }
 
 
