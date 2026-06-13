@@ -14,4 +14,5 @@ public interface AppointmentDAO {
 
     void printDetails(Appointment a);
 
+    void updateAppointmentDetails(Appointment a);
 }

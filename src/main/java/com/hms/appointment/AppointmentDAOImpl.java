@@ -119,4 +119,30 @@ public class AppointmentDAOImpl implements  AppointmentDAO {
         }
 
     }
+
+    @Override
+    public void updateAppointmentDetails(Appointment a){
+        try{
+            String query = "update appointments set patient_id = ?," +
+                    "doctor_id = ?, appointment_date = ?, appointment_time = ?, status = ? where appointment_id = ?";
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.setInt(1, a.getPatientId());
+            ps.setInt(2, a.getDoctorId());
+            ps.setDate(3, a.getAppointmentDate());
+            ps.setTime(4, a.getAppointmentTime());
+            ps.setString(5, a.getStatus().name());
+            ps.setInt(6, a.getAppointmentId());
+            int rows = ps.executeUpdate();
+            if(rows > 0){
+                System.out.println("Appointment Updated Successfully");
+            }
+            else{
+                System.out.println("Appointment Updated Failed");
+            }
+
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 }
