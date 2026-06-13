@@ -35,6 +35,9 @@ public class AppointmentServlet extends HttpServlet {
             case "cancel":
                 cancelAppointment(request, response);
                 break;
+            case "update":
+                updateAppointment(request, response);
+                break;
             default:
                 response.getWriter().println("Invalid Action");
         }
@@ -54,6 +57,9 @@ public class AppointmentServlet extends HttpServlet {
                 break;
             case "search":
                 searchAppointment(request, response);
+                break;
+            case "edit":
+                editAppointment(request, response);
                 break;
             default:
                 response.getWriter().println("Invalid Action");
@@ -115,6 +121,36 @@ public class AppointmentServlet extends HttpServlet {
         try{
             int appointmentId = Integer.parseInt(request.getParameter("appointmentId"));
             appointmentDAO.cancelAppointment(appointmentId);
+            response.sendRedirect(request.getContextPath() + "/appointment?action=viewAll");
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    protected void editAppointment(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        try{
+            int id = Integer.parseInt(request.getParameter("id"));
+            Appointment appointment = appointmentDAO.getAppointmentById(id);
+            request.setAttribute("appointment", appointment);
+            request.getRequestDispatcher("/appointment/edit-appointment.jsp").forward(request, response);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    protected void updateAppointment(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        try{
+            int appointmentId = Integer.parseInt(request.getParameter("appointmentId"));
+            int patientId = Integer.parseInt(request.getParameter("patientId"));
+            int doctorId = Integer.parseInt(request.getParameter("doctorId"));
+            Date appointmentDate = Date.valueOf(request.getParameter("appointmentDate"));
+            Time appointmentTime = Time.valueOf(request.getParameter("appointmentTime") + ":00");
+            Appointment.Status status = Appointment.Status.valueOf(request.getParameter("status"));
+            Appointment appointment = new Appointment(patientId, doctorId, appointmentDate, appointmentTime, status);
+            appointment.setAppointmentId(appointmentId);
+            appointmentDAO.updateAppointmentDetails(appointment);
             response.sendRedirect(request.getContextPath() + "/appointment?action=viewAll");
         }
         catch (Exception e){
