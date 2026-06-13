@@ -32,6 +32,9 @@ public class AppointmentServlet extends HttpServlet {
             case "book":
                 bookAppointment(request, response);
                 break;
+            case "cancel":
+                cancelAppointment(request, response);
+                break;
             default:
                 response.getWriter().println("Invalid Action");
         }
@@ -102,6 +105,17 @@ public class AppointmentServlet extends HttpServlet {
             Appointment appointment = appointmentDAO.getAppointmentById(id);
             request.setAttribute("appointment", appointment);
             request.getRequestDispatcher("/appointment/appointment-details.jsp").forward(request, response);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    protected void cancelAppointment(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        try{
+            int appointmentId = Integer.parseInt(request.getParameter("appointmentId"));
+            appointmentDAO.cancelAppointment(appointmentId);
+            response.sendRedirect(request.getContextPath() + "/appointment?action=viewAll");
         }
         catch (Exception e){
             e.printStackTrace();
