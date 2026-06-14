@@ -26,6 +26,9 @@ public class BillingServlet extends HttpServlet {
             case "viewAll":
                 viewAllBills(request, response);
                 break;
+            case "search":
+                searchBill(request, response);
+                break;
             default:
                 response.getWriter().println("Invalid action");
         }
@@ -66,6 +69,18 @@ public class BillingServlet extends HttpServlet {
             ArrayList<Bill> bills = billingDAO.getAllBills();
             request.setAttribute("bills", bills);
             request.getRequestDispatcher("/billing/view-bills.jsp").forward(request, response);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    protected void searchBill(HttpServletRequest request, HttpServletResponse response) throws IOException,  ServletException {
+        try{
+            int id = Integer.parseInt(request.getParameter("id"));
+            Bill bill = billingDAO.getBillById(id);
+            request.setAttribute("bill", bill);
+            request.getRequestDispatcher("/billing/bill-details.jsp").forward(request, response);
         }
         catch (Exception e){
             e.printStackTrace();
