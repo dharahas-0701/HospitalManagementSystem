@@ -40,6 +40,9 @@ public class BillingServlet extends HttpServlet {
             case "generate":
                 generateBill(request, response);
                 break;
+            case "pay":
+                markBillPaid(request, response);
+                break;
             default:
                 response.getWriter().println("Invalid action");
         }
@@ -76,15 +79,24 @@ public class BillingServlet extends HttpServlet {
     }
 
     protected void searchBill(HttpServletRequest request, HttpServletResponse response) throws IOException,  ServletException {
-        try{
+        try {
             int id = Integer.parseInt(request.getParameter("id"));
             Bill bill = billingDAO.getBillById(id);
             request.setAttribute("bill", bill);
             request.getRequestDispatcher("/billing/bill-details.jsp").forward(request, response);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    protected void markBillPaid(HttpServletRequest request, HttpServletResponse response) throws IOException,  ServletException {
+        try{
+            int billId = Integer.parseInt(request.getParameter("billId"));
+            billingDAO.markBillAsPaid(billId);
+            response.sendRedirect(request.getContextPath()+"/billing?action=viewAll");
         }
         catch (Exception e){
             e.printStackTrace();
         }
     }
-
 }
