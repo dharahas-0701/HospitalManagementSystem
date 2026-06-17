@@ -20,6 +20,14 @@
     </properties>
 
     <dependencies>
+        <!-- Hibernate -->
+        <!-- Source: https://mvnrepository.com/artifact/org.hibernate.orm/hibernate-core -->
+        <dependency>
+            <groupId>org.hibernate.orm</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>7.4.0.Final</version>
+            <scope>compile</scope>
+        </dependency>
 
         <!-- MySQL -->
         <dependency>

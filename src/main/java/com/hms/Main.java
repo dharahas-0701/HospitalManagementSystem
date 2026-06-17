@@ -4,13 +4,17 @@ import com.hms.menu.AppointmentMenu;
 import com.hms.menu.BillingMenu;
 import com.hms.menu.DoctorMenu;
 import com.hms.menu.PatientMenu;
+import org.hibernate.SessionFactory;
+
 import java.util.Scanner;
 
 public class Main {
 
     public static void main(String[] args) {
 
-        Scanner sc  = new Scanner(System.in);
+        SessionFactory factory = HibernateUtil.getSessionFactory();
+        Scanner sc = new Scanner(System.in);
+
 
         while(true) {
             System.out.println("============== ABCD HOSPITAL ===============");
