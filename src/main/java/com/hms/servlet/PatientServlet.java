@@ -15,7 +15,7 @@ import java.util.ArrayList;
 public class PatientServlet extends HttpServlet {
     private PatientDAO patientDAO;
     public void init(){
-        patientDAO = new PatientDAOImpl();
+        patientDAO = new PatientHibernateDAOImpl();
     }
 
 
