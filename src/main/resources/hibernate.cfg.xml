@@ -20,6 +20,8 @@
         <!-- xml/class configurations -->
         <mapping class="com.hms.patient.Patient"/>
         <mapping class="com.hms.doctor.Doctor"/>
+        <mapping class="com.hms.appointment.Appointment"/>
+        <mapping class="com.hms.billing.Bill"/>
 
 
 

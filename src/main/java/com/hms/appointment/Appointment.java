@@ -1,18 +1,32 @@
 package com.hms.appointment;
 
+import jakarta.persistence.*;
+
 import java.sql.Date;
 import java.sql.Time;
+
+@Entity
+@Table(name = "appointments")
 public class Appointment {
     public enum Status {
         BOOKED,
         COMPLETED,
         CANCELLED,
     }
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "appointment_id")
     private int appointmentId;
+    @Column(name = "patient_id")
     private int patientId;
+    @Column(name = "doctor_id")
     private int doctorId;
+    @Column(name = "appointment_date")
     private Date appointmentDate;
+    @Column(name = "appointment_time")
     private Time appointmentTime;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status")
     private Status status;
     public Appointment() {}
     public Appointment(int patientId, int doctorId, Date appointmentDate,

@@ -1,20 +1,35 @@
 package com.hms.billing;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "billing")
 public class Bill {
     public enum PaymentStatus{
         PENDING,
         PAID
     }
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "bill_id")
     private int billId;
+    @Column(name = "patient_id")
     private int patientId;
+    @Column(name = "appointment_id")
     private int appointmentId;
-
+    @Column(name = "consultation_fee")
     private double consultationFee;
+    @Column(name = "medicine_charges")
     private double medicineCharges;
+    @Column(name = "test_charges")
     private double testCharges;
+    @Column(name = "room_charges")
     private double roomCharges;
+    @Column(name = "total_amount")
     private double totalAmount;
-
+    @Enumerated(EnumType.STRING)
+    @Column(name = "payment_status")
     private PaymentStatus paymentStatus;
 
     public Bill(){
