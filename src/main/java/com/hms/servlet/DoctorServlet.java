@@ -3,6 +3,7 @@ package com.hms.servlet;
 import com.hms.doctor.Doctor;
 import com.hms.doctor.DoctorDAO;
 import com.hms.doctor.DoctorDAOImpl;
+import com.hms.doctor.DoctorHibernateDAOImpl;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -16,7 +17,7 @@ import java.util.ArrayList;
 public class DoctorServlet extends HttpServlet {
     private DoctorDAO doctorDAO;
     public void init(){
-        doctorDAO = new DoctorDAOImpl();
+        doctorDAO = new DoctorHibernateDAOImpl();
     }
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
