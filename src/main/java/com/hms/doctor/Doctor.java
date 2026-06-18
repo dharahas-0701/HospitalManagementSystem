@@ -1,5 +1,9 @@
 package com.hms.doctor;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "doctors")
 public class Doctor {
 
 
@@ -17,11 +21,22 @@ public class Doctor {
         AVAILABLE,
         UNAVAILABLE
     }
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "doctor_id")
     private int doctorId;
+    @Column(name = "name",  nullable = false)
     private String doctorName;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "specialization")
     private Specialization specialization;
+    @Column(name = "phone", unique = true)
     private String phone;
+    @Column(name = "experience")
     private int experience;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "availability")
     private Availability availability;
 
     public Doctor() {

@@ -19,6 +19,8 @@
 
         <!-- xml/class configurations -->
         <mapping class="com.hms.patient.Patient"/>
+        <mapping class="com.hms.doctor.Doctor"/>
+
 
 
     </session-factory>
