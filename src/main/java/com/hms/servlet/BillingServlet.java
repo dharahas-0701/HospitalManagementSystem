@@ -3,6 +3,7 @@ package com.hms.servlet;
 import com.hms.billing.Bill;
 import com.hms.billing.BillingDAO;
 import com.hms.billing.BillingDAOImpl;
+import com.hms.billing.BillingHibernateDAOImpl;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -17,7 +18,7 @@ public class BillingServlet extends HttpServlet {
     private BillingDAO billingDAO;
 
     public void init(){
-        billingDAO = new BillingDAOImpl();
+        billingDAO = new BillingHibernateDAOImpl();
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
