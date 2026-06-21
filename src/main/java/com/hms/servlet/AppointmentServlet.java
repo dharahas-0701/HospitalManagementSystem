@@ -3,9 +3,11 @@ package com.hms.servlet;
 import com.hms.appointment.Appointment;
 import com.hms.appointment.AppointmentDAO;
 import com.hms.appointment.AppointmentDAOImpl;
+import com.hms.appointment.AppointmentHibernateDAOImpl;
 import com.hms.doctor.Doctor;
 import com.hms.doctor.DoctorDAO;
 import com.hms.doctor.DoctorDAOImpl;
+import com.hms.doctor.DoctorHibernateDAOImpl;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -23,8 +25,8 @@ public class AppointmentServlet extends HttpServlet {
     private DoctorDAO doctorDAO;
 
     public void init() throws ServletException {
-        appointmentDAO = new AppointmentDAOImpl();
-        doctorDAO = new DoctorDAOImpl();
+        appointmentDAO = new AppointmentHibernateDAOImpl();
+        doctorDAO = new DoctorHibernateDAOImpl();
     }
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
