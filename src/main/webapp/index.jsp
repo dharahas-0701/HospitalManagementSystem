@@ -1,6 +1,7 @@
 <html>
 <head>
     <title>Hospital Management System</title>
+    <link rel="stylesheet" href="css/index.css">
 </head>
 
 <body>
