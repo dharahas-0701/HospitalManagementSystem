@@ -1,6 +1,7 @@
 <html>
 <head>
     <title>Doctor Management</title>
+    <link rel="stylesheet" href="../css/module.css">
 </head>
 
 <body>
