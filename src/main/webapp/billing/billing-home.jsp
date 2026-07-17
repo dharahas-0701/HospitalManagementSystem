@@ -1,6 +1,7 @@
 <html>
 <head>
     <title>Billing Management</title>
+    <link rel="stylesheet" href="../css/module.css">
 </head>
 
 <body>
