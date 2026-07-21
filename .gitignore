@@ -36,3 +36,7 @@ build/
 
 ### Mac OS ###
 .DS_Store
+
+### DB Connections ###
+!**/src/main/**/DBConnection.java
+!**/src/main/**/hibernate.cfg.xml
